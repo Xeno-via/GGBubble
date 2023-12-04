@@ -13,9 +13,9 @@ G = nx.read_edgelist("List.csv", delimiter=",", data=[("weight", int)])
 
 
 
-elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0.5]
-esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 0.5]
+elarge = [(u, v) for (u, v, d) in G.edges(data=True)]
 esize = [(u,v,d) for (u, v, d) in G.edges(data=True)]
+
 
 NamesList = []
 GamesCount = []
@@ -26,6 +26,7 @@ for item in esize:
     if item[1] not in NamesList:
         NamesList.append(str(item[1]))
 
+print(elarge)
 for Name in NamesList:
     PlayerList.append(Player(Name, 0))
 
@@ -40,7 +41,10 @@ sizes = []
 for item in PlayerList:
     sizes.append(item.GameCount)
 
-sizes = [x//10 for x in sizes]
+sizes = [x/10 for x in sizes]
+# print(sizes)
+# for item in PlayerList:
+#     print(item.Name + ":  " + str(item.GameCount))
 pos = nx.spring_layout(G, seed=7)  # positions for all nodes - seed for reproducibility
 
 # nodes
@@ -48,7 +52,6 @@ nx.draw_networkx_nodes(G, pos, node_size=sizes, node_color="c", linewidths=0)
 
 # edges
 nx.draw_networkx_edges(G, pos, edgelist=elarge, width=1)
-nx.draw_networkx_edges(G, pos, edgelist=esmall, width=6, alpha=1, edge_color="m", style="solid",)
 
 # node labels
 nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif", font_color="k", font_weight="bold")
