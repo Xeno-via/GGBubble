@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy
+import ReadSettings
 
 class Player:
     def __init__(self, Name, GameCount):
@@ -8,6 +9,8 @@ class Player:
         self.GameCount = GameCount
 
 
+
+Settings = ReadSettings.read_settings()
 G = nx.Graph()
 G = nx.read_edgelist("List.csv", delimiter=",", data=[("weight", int)]) 
 
@@ -45,7 +48,7 @@ sizes = [x/10 for x in sizes]
 # print(sizes)
 # for item in PlayerList:
 #     print(item.Name + ":  " + str(item.GameCount))
-pos = nx.spring_layout(G, seed=7)  # positions for all nodes - seed for reproducibility
+pos = nx.spring_layout(G, seed=Settings["seed"])  # positions for all nodes - seed for reproducibility
 
 # nodes
 nx.draw_networkx_nodes(G, pos, node_size=sizes, node_color="c", linewidths=0)
@@ -54,7 +57,7 @@ nx.draw_networkx_nodes(G, pos, node_size=sizes, node_color="c", linewidths=0)
 nx.draw_networkx_edges(G, pos, edgelist=elarge, width=1)
 
 # node labels
-nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif", font_color="k", font_weight="bold")
+nx.draw_networkx_labels(G, pos, font_size=Settings["font_size"], font_family="sans-serif", font_color="k", font_weight="bold")
 
 ax = plt.gca()
 ax.margins(0.08)
