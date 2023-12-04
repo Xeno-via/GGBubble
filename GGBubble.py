@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import numpy
 import ReadSettings
+import math
 
 class Player:
     def __init__(self, Name, GameCount):
@@ -51,7 +52,12 @@ sizes = [x/10 for x in sizes]
 pos = nx.spring_layout(G, seed=Settings["seed"])  # positions for all nodes - seed for reproducibility
 
 # nodes
-nx.draw_networkx_nodes(G, pos, node_size=sizes, node_color="c", linewidths=0)
+if Settings["node_scaling"] == 0:
+    nx.draw_networkx_nodes(G, pos, node_color="c", linewidths=0)
+else:
+    nx.draw_networkx_nodes(G, pos, node_size=sizes, node_color="c", linewidths=0)   
+    
+
 
 # edges
 nx.draw_networkx_edges(G, pos, edgelist=elarge, width=1)
