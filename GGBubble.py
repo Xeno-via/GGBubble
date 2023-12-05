@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy
 import ReadSettings
 import math
+import graphviz as gv
+from graphviz import Source
 
 class Player:
     def __init__(self, Name, GameCount):
@@ -70,3 +72,7 @@ ax.margins(0.08)
 plt.axis("off")
 plt.tight_layout()
 plt.show()
+
+nx.write_graphml(G, "fancy_output.graphml")
+
+
